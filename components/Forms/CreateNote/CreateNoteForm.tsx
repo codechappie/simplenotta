@@ -2,23 +2,26 @@ import React from "react";
 import axios from "axios";
 import { useForm } from "@/hooks/useForm";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const CreateNoteForm = () => {
-  let [values, handleInputChange, reset] = useForm({
-    title: "",
-    description: "",
-  });
+  let [title, setTitle] = useState("");
+  let [description, setDescription] = useState("");
+
   const router = useRouter();
 
-  const { title, description }: any = values;
   const createNote = async () => {
-    console.log(values);
     try {
-      await axios.post("/api/notes/create", values).then(({ data }) => {
-        if (data.success) {
-          router.push("/", undefined, { shallow: false });
-        }
-      });
+      await axios
+        .post("/api/notes/create", {
+          title,
+          description,
+        })
+        .then(({ data }) => {
+          if (data.success) {
+            router.push("/", undefined, { shallow: false });
+          }
+        });
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +39,7 @@ const CreateNoteForm = () => {
             type="text"
             placeholder="Escribe un título"
             className="input input-bordered w-full"
-            onChange={handleInputChange}
+            onChange={(e) => setTitle(e.target.value)}
             value={title}
             name="title"
           />
@@ -50,7 +53,7 @@ const CreateNoteForm = () => {
           <textarea
             className="textarea textarea-bordered "
             name="description"
-            onChange={handleInputChange}
+            onChange={(e) => setDescription(e.target.value)}
             value={description}
             placeholder="Escribe algo aquí"
           ></textarea>
