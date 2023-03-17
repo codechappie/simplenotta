@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Layout = ({ title = "", children }: Props) => {
-  const layoutTitle = `SimpleNotta | ${title ? "| " + title : ""}`;
+  const layoutTitle = `SimpleNotta ${title ? "| " + title : ""}`;
 
   return (
     <>
