@@ -1,8 +1,8 @@
-import React from "react";
-import styles from "./Note.module.css";
 import useLongPress from "@/hooks/useLongPress";
-import useGetColour from "@/hooks/useGetColour";
+import axios from "axios";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import styles from "./Note.module.css";
 
 interface Props {
   _id: string;
@@ -13,7 +13,7 @@ interface Props {
 
 const Note = ({ _id, title, description, colour }: Props) => {
   const [showOptions, setshowOptions] = useState(false);
-
+  let router = useRouter();
   const onLongPress = (e: any) => {
     let tempId = e.target.getAttribute("datatype");
     console.log("longpress is triggered", tempId);
@@ -34,8 +34,17 @@ const Note = ({ _id, title, description, colour }: Props) => {
   };
   const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
 
-  const deleteNote = (id: string) => {
-    console.log("DEKETE", id);
+  const deleteNote = async (id: string) => {
+    await axios
+      .delete("/api/notes", {
+        data: {
+          id: _id,
+        },
+      })
+      .then(({ data }) => {
+        console.log(data);
+        router.push("/", undefined, { shallow: false });
+      });
   };
 
   return (

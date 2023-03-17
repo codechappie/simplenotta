@@ -30,20 +30,13 @@ export default async function handler(
           .json({ success: false, error: "Error no hay cursos" });
       }
     case "DELETE":
-      console.log("DELETE");
+      console.log("DELETE", req.body);
       try {
-        let courses;
-        if (q) {
-          courses = await Note.find({
-            title: {
-              $regex: ".*" + q + ".*",
-              $options: "i",
-            },
-          });
-        } else {
-          courses = await Note.find({});
+        let { id } = req.body;
+        if (id) {
+          await Note.findOneAndDelete({ _id: id });
         }
-        return res.status(200).json({ success: true, courses });
+        return res.status(200).json({ success: true, id });
       } catch (error) {
         return res
           .status(400)

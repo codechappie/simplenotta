@@ -8,18 +8,6 @@ import CreateNoteForm from "../components/Forms/CreateNote/CreateNoteForm";
 import dbConnect from "@/lib/dbConnect";
 
 const Home = ({ notes }: any) => {
-  console.log("NOOO 0", notes);
-  // const [notes, setNotes] = useState([]);
-  // const getNotes = () => {
-  //   axios.get("/api/notes").then(({ data }: any) => {
-  //     console.log(data.notes);
-  //     setNotes(data.notes);
-  //   });
-  // };
-  // useEffect(() => {
-  //   getNotes();
-  // }, []);
-  // console.log(notes);
   return (
     <Layout title="Escribe notas, tareas, etc.">
       <div className="notes grid gap-4">
