@@ -93,6 +93,7 @@ const Note = ({ _id, title, description, colour }: Props) => {
           <div className="flex justify-self-stretch">
             <button
               onClick={() => deleteNote(_id)}
+              onTouchEnd={() => deleteNote(_id)}
               className="btn h-full w-full rounded-2xl bg-red-600 hover:bg-red-700 "
             >
               <svg

@@ -1,11 +1,9 @@
 import FloatingButton from "@/components/FloatingButton/FloatingButton";
-import Note from "@/models/Note";
 import NoteComp from "@/components/Note/Note";
-import Layout from "../components/Layout/Layout";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import CreateNoteForm from "../components/Forms/CreateNote/CreateNoteForm";
 import dbConnect from "@/lib/dbConnect";
+import Note from "@/models/Note";
+import CreateNoteForm from "../components/Forms/CreateNote/CreateNoteForm";
+import Layout from "../components/Layout/Layout";
 
 const Home = ({ notes }: any) => {
   return (
@@ -33,7 +31,6 @@ const Home = ({ notes }: any) => {
 export async function getServerSideProps({ query, res }: any) {
   let { q } = query;
   try {
-    console.log(q);
     await dbConnect();
     let notes = await Note.find(
       q
@@ -50,8 +47,6 @@ export async function getServerSideProps({ query, res }: any) {
         : {}
     );
 
-    console.log(notes);
-
     const notesFiltered = notes
       .map((doc: any) => {
         const note = doc.toObject();
@@ -59,7 +54,6 @@ export async function getServerSideProps({ query, res }: any) {
         return note;
       })
       .reverse();
-    console.log("NOOOO 1", notesFiltered);
     return {
       props: {
         notes: notesFiltered,
